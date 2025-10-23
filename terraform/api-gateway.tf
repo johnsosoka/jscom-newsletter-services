@@ -42,27 +42,8 @@ resource "aws_lambda_permission" "newsletter_public_lambda_permission" {
 # Admin Lambda Authorizer
 ################################
 
-# API Gateway v2 authorizer using Lambda
-resource "aws_apigatewayv2_authorizer" "newsletter_api_key_authorizer" {
-  api_id          = local.api_gateway_id
-  authorizer_type = "REQUEST"
-  name            = "${local.project_name}-admin-authorizer"
-  authorizer_uri  = module.newsletter-admin-authorizer.lambda_function_invoke_arn
-
-  authorizer_payload_format_version = "2.0"
-  enable_simple_responses           = true
-
-  identity_sources = ["$request.header.x-api-key"]
-}
-
-# Permission for API Gateway to invoke the authorizer Lambda
-resource "aws_lambda_permission" "newsletter_authorizer_permission" {
-  statement_id  = "AllowNewsletterAPIGatewayInvokeAuthorizer"
-  action        = "lambda:InvokeFunction"
-  function_name = module.newsletter-admin-authorizer.lambda_function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${local.execution_arn}/authorizers/${aws_apigatewayv2_authorizer.newsletter_api_key_authorizer.id}"
-}
+# Authorizer is now provided by the shared lambda-authorizer module
+# in lambdas.tf - no additional resources needed here
 
 ################################
 # Admin Newsletter API Integration
@@ -83,7 +64,7 @@ resource "aws_apigatewayv2_route" "newsletter_admin_route" {
   target    = "integrations/${aws_apigatewayv2_integration.newsletter_admin_integration.id}"
 
   authorization_type = "CUSTOM"
-  authorizer_id      = aws_apigatewayv2_authorizer.newsletter_api_key_authorizer.id
+  authorizer_id      = module.newsletter-admin-authorizer.authorizer_id
 }
 
 # Lambda permission for API Gateway to invoke admin Lambda
