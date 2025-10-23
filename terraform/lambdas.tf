@@ -158,24 +158,13 @@ module "newsletter-api-admin" {
 # Newsletter Admin Authorizer
 ################################
 
+# Use shared lambda-authorizer module from jscom-tf-modules
 module "newsletter-admin-authorizer" {
-  source          = "terraform-aws-modules/lambda/aws"
-  function_name   = var.newsletter_admin_authorizer_lambda_name
-  description     = "Lambda authorizer for newsletter admin API key validation"
-  runtime         = "python3.13"
-  handler         = "newsletter_admin_authorizer_lambda.lambda_handler" # app/newsletter_admin_authorizer_lambda.py
-  build_in_docker = false
+  source = "git::https://github.com/johnsosoka/jscom-tf-modules.git//modules/lambda-authorizer?ref=main"
 
-  source_path = [{
-    path             = "${path.module}/../lambdas/src/newsletter-admin-authorizer/app"
-    pip_requirements = false
-  }]
-
-  environment_variables = {
-    ADMIN_API_KEY = var.admin_api_key_value
-  }
-
-  tags = {
-    project = local.project_name
-  }
+  function_name              = var.newsletter_admin_authorizer_lambda_name
+  api_gateway_id             = local.api_gateway_id
+  api_gateway_execution_arn  = local.execution_arn
+  admin_api_key_value        = var.admin_api_key_value
+  project_name               = local.project_name
 }
