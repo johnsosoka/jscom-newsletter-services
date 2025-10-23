@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "a3f7c8e9-6d4b-4f2a-9c1e-8b5a2f7d3e91",
+		"name": "jscom-newsletter-services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18046817"
+	},
+	"item": [
+		{
+			"name": "Public Endpoints",
+			"item": [
+				{
+					"name": "Subscribe to Newsletter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"name\": \"Test User\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unsubscribe from Newsletter",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Subscription Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/status?email=test@example.com",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"status"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "test@example.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Newsletter Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/stats",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Subscribers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers?limit=50",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "next_token",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Active Subscribers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers?limit=50&status=active",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "status",
+									"value": "active"
+								},
+								{
+									"key": "next_token",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Inactive Subscribers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers?limit=50&status=inactive",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "status",
+									"value": "inactive"
+								},
+								{
+									"key": "next_token",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Subscriber",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers/:subscriber_id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers",
+								":subscriber_id"
+							],
+							"variable": [
+								{
+									"key": "subscriber_id",
+									"value": "your-subscriber-id-here"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Subscriber Email",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newemail@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers/:subscriber_id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers",
+								":subscriber_id"
+							],
+							"variable": [
+								{
+									"key": "subscriber_id",
+									"value": "your-subscriber-id-here"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Subscriber",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{admin_api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.johnsosoka.com/v1/newsletter/admin/subscribers/:subscriber_id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"johnsosoka",
+								"com"
+							],
+							"path": [
+								"v1",
+								"newsletter",
+								"admin",
+								"subscribers",
+								":subscriber_id"
+							],
+							"variable": [
+								{
+									"key": "subscriber_id",
+									"value": "your-subscriber-id-here"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "admin_api_key",
+			"value": "your-api-key-here",
+			"type": "string"
+		}
+	]
+}
