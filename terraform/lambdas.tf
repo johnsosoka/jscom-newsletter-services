@@ -158,13 +158,5 @@ module "newsletter-api-admin" {
 # Newsletter Admin Authorizer
 ################################
 
-# Use shared lambda-authorizer module from jscom-tf-modules
-module "newsletter-admin-authorizer" {
-  source = "git::https://github.com/johnsosoka/jscom-tf-modules.git//modules/lambda-authorizer?ref=main"
-
-  function_name              = var.newsletter_admin_authorizer_lambda_name
-  api_gateway_id             = local.api_gateway_id
-  api_gateway_execution_arn  = local.execution_arn
-  admin_api_key_value        = var.admin_api_key_value
-  project_name               = local.project_name
-}
+# Authorization now handled by Cognito JWT authorizer in api-gateway.tf
+# No Lambda authorizer needed - API Gateway validates JWT tokens natively

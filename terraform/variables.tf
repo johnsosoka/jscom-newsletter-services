@@ -16,15 +16,5 @@ variable "newsletter_api_admin_lambda_name" {
   default     = "newsletter-api-admin"
 }
 
-variable "newsletter_admin_authorizer_lambda_name" {
-  description = "Name for the newsletter admin authorizer Lambda function"
-  type        = string
-  default     = "newsletter-admin-authorizer"
-}
-
-# Admin API Key Configuration
-variable "admin_api_key_value" {
-  description = "API key value for admin endpoints (store securely, generate with: openssl rand -hex 32)"
-  type        = string
-  sensitive   = true
-}
+# Admin authorization is now handled by Cognito JWT tokens
+# No API key or Lambda authorizer needed

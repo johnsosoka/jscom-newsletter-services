@@ -17,11 +17,6 @@ output "newsletter_api_admin_function_name" {
   value       = module.newsletter-api-admin.lambda_function_name
 }
 
-output "newsletter_admin_authorizer_function_name" {
-  description = "Name of the newsletter admin authorizer Lambda function"
-  value       = module.newsletter-admin-authorizer.lambda_function_name
-}
-
 ################################
 # API Gateway Outputs
 ################################
@@ -46,12 +41,13 @@ output "newsletter_public_routes" {
 }
 
 output "newsletter_admin_routes" {
-  description = "Available admin newsletter API routes (requires x-api-key header)"
+  description = "Available admin newsletter API routes (requires Cognito JWT token in Authorization header)"
   value = {
-    list_subscribers = "GET /v1/newsletter/admin/subscribers"
-    get_subscriber   = "GET /v1/newsletter/admin/subscribers/{id}"
-    update_status    = "PUT /v1/newsletter/admin/subscribers/{id}/status"
+    list_subscribers  = "GET /v1/newsletter/admin/subscribers"
+    get_subscriber    = "GET /v1/newsletter/admin/subscribers/{id}"
+    update_subscriber = "PATCH /v1/newsletter/admin/subscribers/{id}"
     delete_subscriber = "DELETE /v1/newsletter/admin/subscribers/{id}"
+    get_stats         = "GET /v1/newsletter/admin/stats"
   }
 }
 
