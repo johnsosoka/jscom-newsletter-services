@@ -28,4 +28,9 @@ locals {
   api_domain_name    = data.terraform_remote_state.jscom_common_data.outputs.custom_domain_name
   api_gateway_id     = data.terraform_remote_state.jscom_common_data.outputs.api_gateway_id
   api_gateway_target = data.terraform_remote_state.jscom_common_data.outputs.custom_domain_name_target
+
+  // Cognito JWT authorization
+  cognito_user_pool_arn = data.terraform_remote_state.jscom_common_data.outputs.cognito_user_pool_arn
+  cognito_app_client_id = data.terraform_remote_state.jscom_common_data.outputs.cognito_app_client_id
+  cognito_issuer_url    = data.terraform_remote_state.jscom_common_data.outputs.cognito_issuer_url
 }

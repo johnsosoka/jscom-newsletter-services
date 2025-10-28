@@ -39,14 +39,8 @@ resource "aws_lambda_permission" "newsletter_public_lambda_permission" {
 }
 
 ################################
-# Admin Lambda Authorizer
-################################
-
-# Authorizer is now provided by the shared lambda-authorizer module
-# in lambdas.tf - no additional resources needed here
-
-################################
 # Admin Newsletter API Integration
+# JWT validation is handled by the Lambda function itself
 ################################
 
 resource "aws_apigatewayv2_integration" "newsletter_admin_integration" {
@@ -58,13 +52,11 @@ resource "aws_apigatewayv2_integration" "newsletter_admin_integration" {
 }
 
 # Catch-all route for admin endpoints: ANY /v1/newsletter/admin/{proxy+}
+# No API Gateway authorization - Lambda validates JWT tokens internally
 resource "aws_apigatewayv2_route" "newsletter_admin_route" {
   api_id    = local.api_gateway_id
   route_key = "ANY /v1/newsletter/admin/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.newsletter_admin_integration.id}"
-
-  authorization_type = "CUSTOM"
-  authorizer_id      = module.newsletter-admin-authorizer.authorizer_id
 }
 
 # Lambda permission for API Gateway to invoke admin Lambda
