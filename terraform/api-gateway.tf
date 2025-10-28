@@ -39,23 +39,8 @@ resource "aws_lambda_permission" "newsletter_public_lambda_permission" {
 }
 
 ################################
-# Admin JWT Authorizer (Cognito)
-################################
-
-resource "aws_apigatewayv2_authorizer" "cognito_jwt" {
-  api_id           = local.api_gateway_id
-  authorizer_type  = "JWT"
-  identity_sources = ["$request.header.Authorization"]
-  name             = "cognito-jwt-authorizer"
-
-  jwt_configuration {
-    audience = [local.cognito_app_client_id]
-    issuer   = local.cognito_issuer_url
-  }
-}
-
-################################
 # Admin Newsletter API Integration
+# JWT validation is handled by the Lambda function itself
 ################################
 
 resource "aws_apigatewayv2_integration" "newsletter_admin_integration" {
@@ -67,13 +52,11 @@ resource "aws_apigatewayv2_integration" "newsletter_admin_integration" {
 }
 
 # Catch-all route for admin endpoints: ANY /v1/newsletter/admin/{proxy+}
+# No API Gateway authorization - Lambda validates JWT tokens internally
 resource "aws_apigatewayv2_route" "newsletter_admin_route" {
   api_id    = local.api_gateway_id
   route_key = "ANY /v1/newsletter/admin/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.newsletter_admin_integration.id}"
-
-  authorization_type = "JWT"
-  authorizer_id      = aws_apigatewayv2_authorizer.cognito_jwt.id
 }
 
 # Lambda permission for API Gateway to invoke admin Lambda
